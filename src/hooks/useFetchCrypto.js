@@ -22,10 +22,10 @@ export const useFetchCrypto = () => {
     } catch (err) {
       setError(err.message);
     } finally {
-      // REQUIREMENT: The 800ms timer
+      // REQUIREMENT: timer
       setTimeout(() => {
         setLoading(false);
-      }, 800);
+      }, 1500);
     }
   }, [currency, setCoins]); // Only changes if currency or setCoins changes
 
