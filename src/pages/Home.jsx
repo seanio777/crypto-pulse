@@ -81,13 +81,13 @@ const Home = () => {
       </div>
 
       {/* Market Chart Container */}
-      <div className="bg-slate-800/30 p-8 rounded-[2rem] border border-slate-700/50 shadow-2xl backdrop-blur-sm">
+      <div className="bg-slate-800/30 p-8 rounded-[2rem] border border-slate-700/50 shadow-2xl backdrop-blur-sm overflow-hidden">
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-2 h-8 bg-cyan-500 rounded-full"></div>
-          <h2 className="text-2xl font-bold text-white">Market Depth Analysis ({currency})</h2>
-        </div>
+        <div className="w-2 h-8 bg-cyan-500 rounded-full"></div>
+        <h2 className="text-2xl font-bold text-white uppercase tracking-tight">Market Depth Analysis ({currency})</h2>
+      </div>
         {/* FIX: Parent must have a defined height for Recharts */}
-        <div className="h-[400px] w-full">
+        <div className="h-[400px] w-full relative">
           <MarketChart />
         </div>
       </div>

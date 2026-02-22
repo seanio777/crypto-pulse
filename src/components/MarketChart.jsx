@@ -5,27 +5,27 @@ import { useCrypto } from '../context/CryptoContext';
 const MarketChart = () => {
   const { coins, currency } = useCrypto();
 
-  // Mapping currency codes to symbols
-  const currencySymbols = {
-    USD: '$',
-    PHP: '₱',
-    EUR: '€',
-    JPY: '¥',
-    GBP: '£'
-  };
-
+  const currencySymbols = { USD: '$', PHP: '₱', EUR: '€', JPY: '¥', GBP: '£' };
   const currentSymbol = currencySymbols[currency] || '$';
+
+  if (!coins || coins.length === 0) return null;
 
   return (
     <ResponsiveContainer width="100%" height="100%">
       <BarChart 
         data={coins} 
-        margin={{ top: 10, right: 10, left: 0, bottom: -15 }} // Negative margin kills the gap
+        margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+        // categoryGap makes the bars feel closer together if needed
+        categoryGap="20%" 
       >
         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" opacity={0.3} />
-        
-        <XAxis dataKey="symbol" hide /> 
-
+        <XAxis 
+          dataKey="symbol" 
+          tick={{ fill: '#94a3b8', fontSize: 12, fontWeight: 'bold' }} 
+          tickLine={false}
+          axisLine={false}
+          dy={10}
+        /> 
         <YAxis 
           stroke="#94a3b8"
           fontSize={12}
@@ -34,7 +34,6 @@ const MarketChart = () => {
           tickFormatter={(value) => `${currentSymbol}${value.toLocaleString()}`}
           width={80}
         />
-
         <Tooltip 
           cursor={{ fill: 'rgba(34, 211, 238, 0.1)' }}
           contentStyle={{ 
@@ -44,13 +43,13 @@ const MarketChart = () => {
             color: '#fff' 
           }}
           formatter={(value) => [`${currentSymbol}${value.toLocaleString()}`, "Price"]}
-          itemStyle={{ color: '#22d3ee', fontWeight: 'bold' }}
         />
-
         <Bar 
           dataKey="current_price" 
           fill="#22d3ee" 
           radius={[6, 6, 0, 0]} 
+          // INCREASED BAR WIDTH HERE
+          barSize={60} 
         />
       </BarChart>
     </ResponsiveContainer>
