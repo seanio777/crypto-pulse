@@ -18,30 +18,34 @@ const Settings = () => {
         <h1 className="text-3xl font-bold text-white">Market Settings</h1>
       </div>
 
-      <div className="bg-slate-800/40 rounded-3xl border border-slate-700/50 p-8 shadow-2xl">
-        <h2 className="text-lg font-medium text-slate-300 mb-6">Preferred Currency</h2>
+      <div className="bg-slate-800/40 rounded-3xl border border-slate-700/50 p-8 shadow-2xl backdrop-blur-sm">
+      <h2 className="text-xl font-bold text-white mb-8 border-b border-slate-700 pb-4">Preferred Currency</h2>
         
         <div className="grid gap-4">
-          {currencies.map((curr) => (
-            <button
-              key={curr.code}
-              onClick={() => setCurrency(curr.code)}
-              className={`flex items-center justify-between p-5 rounded-2xl border transition-all ${
-                currency === curr.code 
-                ? 'bg-cyan-500/10 border-cyan-500 text-white' 
-                : 'bg-slate-900/50 border-slate-800 text-slate-400 hover:border-slate-600'
-              }`}
-            >
-              <div className="flex items-center gap-4">
-                <span className="text-2xl font-mono w-8">{curr.symbol}</span>
-                <div className="text-left">
-                  <p className="font-bold">{curr.code}</p>
-                  <p className="text-xs opacity-60">{curr.name}</p>
-                </div>
+        {currencies.map((curr) => (
+          <button
+            key={curr.code}
+            onClick={() => setCurrency(curr.code)}
+            className={`flex items-center justify-between p-6 rounded-2xl border-2 transition-all ${
+              currency === curr.code 
+              ? 'bg-cyan-500/20 border-cyan-500 text-white shadow-[0_0_20px_rgba(6,182,212,0.2)]' 
+              : 'bg-slate-900/80 border-slate-700 text-slate-200 hover:border-slate-500'
+            }`}
+          >
+            <div className="flex items-center gap-5">
+              <span className={`text-3xl font-bold w-10 ${currency === curr.code ? 'text-cyan-400' : 'text-slate-400'}`}>
+                {curr.symbol}
+              </span>
+              <div className="text-left">
+                <p className="text-lg font-black tracking-tight">{curr.code}</p>
+                <p className={`text-sm font-medium ${currency === curr.code ? 'text-cyan-200/70' : 'text-slate-500'}`}>
+                  {curr.name}
+                </p>
               </div>
-              {currency === curr.code && <CheckCircle2 className="text-cyan-400" size={24} />}
-            </button>
-          ))}
+            </div>
+            {currency === curr.code && <CheckCircle2 className="text-cyan-400" size={28} strokeWidth={3} />}
+          </button>
+        ))}
         </div>
 
         <p className="mt-8 text-sm text-slate-500 text-center italic">

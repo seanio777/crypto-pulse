@@ -52,25 +52,26 @@ const Home = () => {
         {filteredCoins.map(coin => {
           const isPositive = coin.price_change_percentage_24h >= 0;
           return (
-            <div key={coin.id} className="group p-5 bg-slate-800/40 rounded-2xl border border-slate-700/50 hover:border-cyan-500/40 hover:bg-slate-800/60 transition-all duration-300 shadow-xl hover:shadow-cyan-500/5">
-              <div className="flex justify-between items-start">
+            <div key={coin.id} className="group p-6 bg-slate-800/60 rounded-2xl border border-slate-700/50 hover:border-cyan-500/50 transition-all shadow-xl">
+              <div className="flex justify-between items-center">
                 <div className="flex items-center gap-4">
-                  <div className="p-2 bg-slate-900 rounded-lg group-hover:scale-110 transition-transform">
-                    <img src={coin.image} alt={coin.name} className="w-8 h-8" />
+                  <div className="p-2 bg-slate-900 rounded-xl">
+                    <img src={coin.image} alt={coin.name} className="w-10 h-10" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-slate-100">{coin.name}</h3>
-                    <span className="text-xs font-mono text-slate-500 uppercase">{coin.symbol}</span>
+                    {/* VISIBILITY: Using slate-100 and slate-400 for contrast */}
+                    <h3 className="font-extrabold text-lg text-slate-100 tracking-tight">{coin.name}</h3>
+                    <span className="text-xs font-bold font-mono text-cyan-500/80 uppercase tracking-widest">{coin.symbol}</span>
                   </div>
                 </div>
                 
                 <div className="text-right">
-                  <p className="text-lg font-bold font-mono text-white">
-                    {/* DYNAMIC SYMBOL APPLIED HERE */}
+                  {/* VISIBILITY: Price is now bold and white */}
+                  <p className="text-xl font-black font-mono text-white">
                     {getSymbol(currency)}{coin.current_price.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                   </p>
-                  <div className={`flex items-center justify-end gap-1 text-sm font-medium ${isPositive ? 'text-emerald-400' : 'text-rose-400'}`}>
-                    {isPositive ? <TrendingUp size={14}/> : <TrendingDown size={14}/>}
+                  <div className={`flex items-center justify-end gap-1 text-sm font-bold ${isPositive ? 'text-emerald-400' : 'text-rose-400'}`}>
+                    {isPositive ? <TrendingUp size={16}/> : <TrendingDown size={16}/>}
                     {Math.abs(coin.price_change_percentage_24h).toFixed(2)}%
                   </div>
                 </div>
