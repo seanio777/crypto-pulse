@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import Analysis from './pages/Analysis';
 import { CryptoProvider } from './context/CryptoContext';
+import Settings from './pages/Settings';
 
 function App() {
   return (
@@ -16,9 +17,11 @@ function App() {
             <div className="flex gap-8 items-center font-medium">
               <Link to="/" className="hover:text-cyan-400 transition-colors">Market</Link>
               <Link to="/analysis" className="hover:text-cyan-400 transition-colors">Analysis</Link>
-              <button className="bg-slate-100 text-slate-900 px-4 py-1.5 rounded-lg text-sm font-bold shadow-lg hover:bg-white transition-all">
-                USD
-              </button>
+              <Link to="/settings" className="hover:text-cyan-400 transition-colors">Settings</Link>
+              {/* Display current currency in the header */}
+              <span className="bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-md text-xs font-bold border border-cyan-500/30">
+                {currency}
+              </span>
             </div>
           </nav>
 
@@ -26,6 +29,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/analysis" element={<Analysis />} />
+              <Route path="/settings" element={<Settings />} />
             </Routes>
           </main>
         </div>
