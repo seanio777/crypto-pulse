@@ -46,7 +46,7 @@ function AppContent() {
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
           <div className="bg-slate-900 border border-slate-800 w-full max-w-md rounded-[2rem] p-8 shadow-2xl">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-black uppercase tracking-tight">System Settings</h2>
+              <h2 className="text-xl font-black uppercase tracking-tight">Settings</h2>
               <button onClick={() => setIsSettingsOpen(false)} className="text-slate-500 hover:text-white">
                 <X size={24} />
               </button>
