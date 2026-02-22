@@ -15,34 +15,38 @@ function AppContent() {
       
       {/* Responsive Navigation */}
       <nav className="border-b border-slate-800 bg-slate-900/50 backdrop-blur-xl sticky top-0 z-50 w-full">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 md:h-20 flex items-center justify-between">
-          
-          {/* Logo - Adjusted for mobile */}
-          <Link to="/" className="flex items-center gap-2 md:gap-3 shrink-0">
-            <div className="bg-cyan-500 rounded-lg md:rounded-xl p-1.5 md:p-2 shadow-[0_0_20px_rgba(6,182,212,0.3)]">
-              <Activity className="text-slate-950 w-5 h-5 md:w-6 md:h-6" strokeWidth={3} />
+        {/* TOP ROW: Logo and Settings */}
+        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-2 shrink-0">
+            <div className="bg-cyan-500 rounded-lg p-1.5 shadow-[0_0_20px_rgba(6,182,212,0.3)]">
+              <Activity className="text-slate-950 w-5 h-5" strokeWidth={3} />
             </div>
-            <div className="flex items-center tracking-tighter shrink-0">
+            <div className="flex items-center tracking-tighter">
               <span className="text-lg md:text-2xl font-black text-white uppercase italic leading-none">Crypto</span>
               <span className="text-lg md:text-2xl font-light text-cyan-400 uppercase ml-1 leading-none">Pulse</span>
             </div>
           </Link>
 
-          {/* Nav Links & Settings - Adjusted spacing */}
-          <div className="flex items-center gap-3 md:gap-8">
-            <Link to="/" className="text-[10px] md:text-sm font-bold uppercase tracking-widest text-slate-400 hover:text-cyan-400">Market</Link>
-            <Link to="/analysis" className="hidden sm:block text-[10px] md:text-sm font-bold uppercase tracking-widest text-slate-400 hover:text-cyan-400">Analysis</Link>
-            
+          <div className="flex items-center gap-4">
+            {/* Desktop Links (Hidden on small mobile) */}
+            <div className="hidden md:flex items-center gap-8 mr-4">
+              <Link to="/" className="text-sm font-bold uppercase tracking-widest text-slate-400 hover:text-cyan-400">Market</Link>
+              <Link to="/analysis" className="text-sm font-bold uppercase tracking-widest text-slate-400 hover:text-cyan-400">Analysis</Link>
+            </div>
+
             <button 
               onClick={() => setIsSettingsOpen(true)}
-              className="p-2 md:p-2.5 rounded-lg md:rounded-xl border border-slate-700 bg-slate-800 hover:bg-cyan-400 hover:border-cyan-400 transition-all group"
+              className="p-2 rounded-lg border border-slate-700 bg-slate-800 hover:bg-cyan-400 transition-all group"
             >
-              <Settings 
-                size={18}
-                className="text-slate-400 group-hover:text-black transition-colors duration-200"
-              />
+              <Settings size={18} className="text-slate-400 group-hover:text-black" />
             </button>
           </div>
+        </div>
+
+        {/* BOTTOM ROW: Mobile Navigation (Only visible on small screens) */}
+        <div className="md:hidden border-t border-slate-800/50 flex justify-around py-3 bg-slate-900/30">
+          <Link to="/" className="text-[10px] font-black uppercase tracking-[0.2em] text-cyan-400">Market</Link>
+          <Link to="/analysis" className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-cyan-400">Analysis</Link>
         </div>
       </nav>
 
