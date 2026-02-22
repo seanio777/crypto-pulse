@@ -67,22 +67,31 @@ function AppContent() {
               </button>
             </div>
             
-            <p className="text-slate-400 text-sm font-bold uppercase tracking-widest mb-4">Select Currency</p>
+            <p className="text-slate-400 text-sm font-bold uppercase tracking-widest mb-4 text-center">
+              Select Currency
+            </p>
+
             <div className="grid grid-cols-2 gap-3">
-              {['USD', 'PHP', 'EUR', 'JPY'].map((curr) => (
+              {[
+                { code: 'USD', symbol: '$' },
+                { code: 'PHP', symbol: '₱' },
+                { code: 'EUR', symbol: '€' },
+                { code: 'JPY', symbol: '¥' }
+              ].map((item) => (
                 <button
-                  key={curr}
+                  key={item.code}
                   onClick={() => {
-                    setCurrency(curr);
+                    setCurrency(item.code);
                     setIsSettingsOpen(false);
                   }}
-                  className={`py-3 rounded-xl font-bold transition-all border ${
-                    currency === curr 
+                  className={`py-3 px-4 rounded-xl font-bold transition-all border flex flex-col items-center justify-center gap-1 ${
+                    currency === item.code 
                     ? 'bg-cyan-500 border-cyan-400 text-slate-950 shadow-[0_0_15px_rgba(6,182,212,0.4)]' 
                     : 'bg-slate-800 border-slate-700 text-slate-400 hover:border-slate-500'
                   }`}
                 >
-                  {curr}
+                  <span className="text-xs opacity-80 uppercase">{item.code}</span>
+                  <span className="text-xl">{item.symbol}</span>
                 </button>
               ))}
             </div>
