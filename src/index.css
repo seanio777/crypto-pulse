@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --animate-loading-slide: loading-slide 3s infinite linear;
+  --animate-loading-slide: loading-slide 2s infinite linear;
 
   @keyframes loading-slide {
     from { transform: translateX(-100%); }
