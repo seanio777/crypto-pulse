@@ -2,50 +2,72 @@ import { useState, useRef, useEffect } from 'react';
 import { useFetchCrypto } from '../hooks/useFetchCrypto';
 import { useCrypto } from '../context/CryptoContext';
 import MarketChart from '../components/MarketChart';
+import { Search, Loader2 } from 'lucide-react'; // Using the icons you installed
 
 const Home = () => {
   const { loading, error } = useFetchCrypto();
   const { coins } = useCrypto();
   const [search, setSearch] = useState('');
-  const inputRef = useRef(null);
+  const inputRef = useRef(null); // The "Laser Pointer"
 
-  // Requirement: Search Interaction (useRef "Laser Pointer")
+  // REQUIREMENT: Search Interaction (useRef)
   useEffect(() => {
-    inputRef.current.focus();
+    if (inputRef.current) inputRef.current.focus();
   }, []);
 
-  // Requirement: Controlled Forms (Real-time filtering)
+  // REQUIREMENT: Controlled Forms (Search Filter)
   const filteredCoins = coins.filter(coin =>
-    coin.name.toLowerCase().includes(search.toLowerCase())
+    coin.name.toLowerCase().includes(search.toLowerCase()) ||
+    coin.symbol.toLowerCase().includes(search.toLowerCase())
   );
 
-  if (loading) return <div className="p-10 text-white animate-pulse">Scanning Blockchain...</div>;
-  if (error) return <div className="p-10 text-red-400">Error: {error}</div>;
+  // REQUIREMENT: Loading State
+  if (loading) return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-cyan-400">
+      <Loader2 className="animate-spin mb-2" size={48} />
+      <p className="tracking-widest">SCANNING BLOCKCHAIN...</p>
+    </div>
+  );
+
+  if (error) return <div className="p-10 text-red-500 bg-gray-900 min-h-screen">Error: {error}</div>;
 
   return (
     <div className="p-8 bg-gray-900 min-h-screen text-white">
-      <input
-        ref={inputRef}
-        type="text"
-        placeholder="Search for a coin (e.g. Bitcoin)..."
-        className="w-full p-4 rounded-lg bg-gray-800 border border-gray-700 mb-8 focus:ring-2 focus:ring-cyan-500 outline-none"
-        onChange={(e) => setSearch(e.target.value)}
-      />
+      <div className="relative mb-8">
+        <Search className="absolute left-3 top-3.5 text-gray-500" size={20} />
+        <input
+          ref={inputRef}
+          type="text"
+          placeholder="Search for a cryptocurrency..."
+          className="w-full p-3 pl-10 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-cyan-500 outline-none transition-all"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
 
-      <div className="grid gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
         {filteredCoins.map(coin => (
-          <div key={coin.id} className="flex justify-between p-4 bg-gray-800 rounded-lg border-l-4 border-cyan-500">
-            <span>{coin.name} ({coin.symbol.toUpperCase()})</span>
-            {/* Requirement: State-Based Styling (Green/Red) */}
-            <span className={coin.price_change_percentage_24h > 0 ? "text-green-400" : "text-red-400"}>
-              ${coin.current_price.toLocaleString()} 
-              ({coin.price_change_percentage_24h.toFixed(2)}%)
-            </span>
+          <div key={coin.id} className="p-4 bg-gray-800 rounded-xl border border-gray-700 hover:border-cyan-500 transition-colors shadow-lg">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <img src={coin.image} alt={coin.name} className="w-8 h-8" />
+                <span className="font-bold">{coin.name}</span>
+              </div>
+              {/* REQUIREMENT: State-Based Styling (Green/Red) */}
+              <div className="text-right">
+                <p className="font-mono">${coin.current_price.toLocaleString()}</p>
+                <p className={`text-sm ${coin.price_change_percentage_24h >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                  {coin.price_change_percentage_24h.toFixed(2)}%
+                </p>
+              </div>
+            </div>
           </div>
         ))}
       </div>
 
-      <MarketChart />
+      <div className="bg-gray-800 p-6 rounded-2xl shadow-2xl">
+        <MarketChart />
+      </div>
     </div>
   );
 };
