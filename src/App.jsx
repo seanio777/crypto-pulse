@@ -84,14 +84,14 @@ function AppContent() {
                     setCurrency(item.code);
                     setIsSettingsOpen(false);
                   }}
-                  className={`py-3 px-4 rounded-xl font-bold transition-all border flex flex-col items-center justify-center gap-1 ${
+                  className={`py-3 px-4 rounded-xl font-bold transition-all border flex items-center justify-center gap-2 ${
                     currency === item.code 
                     ? 'bg-cyan-500 border-cyan-400 text-slate-950 shadow-[0_0_15px_rgba(6,182,212,0.4)]' 
                     : 'bg-slate-800 border-slate-700 text-slate-400 hover:border-slate-500'
                   }`}
                 >
-                  <span className="text-xs opacity-80 uppercase">{item.code}</span>
-                  <span className="text-xl">{item.symbol}</span>
+                  <span className="text-lg">{item.symbol}</span>
+                  <span className="text-sm uppercase tracking-tight">{item.code}</span>
                 </button>
               ))}
             </div>
