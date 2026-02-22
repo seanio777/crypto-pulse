@@ -19,7 +19,6 @@ const Analysis = () => {
       </div>
 
       {/* Main Chart Container */}
-      {/* pb-4 significantly reduces the space at the bottom of the card */}
       <div className="bg-slate-800/40 p-10 pb-4 rounded-[2.5rem] border border-slate-700/50 shadow-2xl backdrop-blur-md">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div className="flex items-center gap-4">
@@ -42,13 +41,11 @@ const Analysis = () => {
           </div>
         </div>
         
-        {/* The Chart - Height remains at 550px as requested for the deep dive */}
-        <div className="h-[350px] w-full">
+        <div className="h-[550px] w-full">
           <MarketChart />
         </div>
       </div>
       
-      {/* Italic text stays outside, but mt-4 keeps it tight to the container */}
       <p className="mt-4 text-center text-slate-600 text-sm font-medium italic">
         * Data is pulled directly from the global context to ensure parity with the Market section.
       </p>
