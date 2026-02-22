@@ -101,23 +101,24 @@ const Home = () => {
         {filteredCoins.map(coin => {
           const isPositive = coin.price_change_percentage_24h >= 0;
           return (
-            <div key={coin.id} className="group p-5 bg-slate-800/40 rounded-2xl border border-slate-700/50 hover:border-cyan-500/40 transition-all duration-300 shadow-xl">
-              <div className="flex justify-between items-start">
-                <div className="flex items-center gap-4">
-                  <div className="p-2 bg-slate-900 rounded-lg">
-                    <img src={coin.image} alt={coin.name} className="w-8 h-8" />
+            <div key={coin.id} className="group p-4 sm:p-5 bg-slate-800/40 rounded-2xl border border-slate-700/50 hover:border-cyan-500/40 transition-all duration-300 shadow-xl">
+              <div className="flex justify-between items-center gap-2"> {/* Changed items-start to items-center */}
+                <div className="flex items-center gap-3 min-w-0"> {/* min-w-0 is the secret to allowing text truncation */}
+                  <div className="p-1.5 md:p-2 bg-slate-900 rounded-lg shrink-0">
+                    <img src={coin.image} alt={coin.name} className="w-6 h-6 md:w-8 md:h-8" />
                   </div>
-                  <div>
-                    <h3 className="font-bold text-slate-100">{coin.name}</h3>
-                    <span className="text-xs font-mono text-slate-500 uppercase">{coin.symbol}</span>
+                  <div className="min-w-0"> 
+                    <h3 className="font-bold text-slate-100 text-sm md:text-base truncate">{coin.name}</h3>
+                    <p className="text-[10px] md:text-xs font-mono text-slate-500 uppercase truncate">{coin.symbol}</p>
                   </div>
                 </div>
-                <div className="text-right">
-                  <p className="text-lg font-bold text-white">
+
+                <div className="text-right shrink-0">
+                  <p className="text-sm md:text-lg font-bold text-white">
                     {getSymbol(currency)}{coin.current_price.toLocaleString()}
                   </p>
-                  <div className={`flex items-center justify-end gap-1 text-sm font-medium ${isPositive ? 'text-emerald-400' : 'text-rose-400'}`}>
-                    {isPositive ? <TrendingUp size={14}/> : <TrendingDown size={14}/>}
+                  <div className={`flex items-center justify-end gap-1 text-[10px] md:text-sm font-medium ${isPositive ? 'text-emerald-400' : 'text-rose-400'}`}>
+                    {isPositive ? <TrendingUp size={12}/> : <TrendingDown size={12}/>}
                     {Math.abs(coin.price_change_percentage_24h).toFixed(2)}%
                   </div>
                 </div>
