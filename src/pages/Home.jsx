@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useFetchCrypto } from '../hooks/useFetchCrypto';
 import { useCrypto } from '../context/CryptoContext';
 import MarketChart from '../components/MarketChart';
-import { Search, Loader2, TrendingUp, TrendingDown } from 'lucide-react';
+import { Search, Loader2, TrendingUp, TrendingDown, Activity } from 'lucide-react';
 
 const Home = () => {
   const { loading, error } = useFetchCrypto();
@@ -26,14 +26,54 @@ const Home = () => {
 
   // Requirement: Visible Loading State
   if (loading) return (
-    <div className="flex flex-col items-center justify-center min-h-[80vh] text-cyan-400">
-      <Loader2 className="animate-spin mb-4" size={48} />
-      <p className="tracking-[0.2em] font-bold animate-pulse uppercase">Syncing Market Data...</p>
+    <div className="flex flex-col items-center justify-center min-h-[80vh] bg-slate-950">
+      {/* Brand Icon with Glow */}
+      <div className="relative mb-8">
+        <div className="absolute inset-0 bg-cyan-500/20 blur-3xl rounded-full animate-pulse"></div>
+        <div className="relative bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl">
+          <Activity className="text-cyan-400 animate-bounce" size={48} strokeWidth={2.5} />
+        </div>
+      </div>
+
+      {/* Status Text */}
+      <div className="text-center space-y-2">
+        <h2 className="text-white font-black uppercase tracking-[0.4em] text-xl animate-pulse">
+          Initializing Sync
+        </h2>
+        <div className="flex items-center justify-center gap-2">
+          <span className="w-1.5 h-1.5 bg-cyan-500 rounded-full animate-ping"></span>
+          <p className="text-slate-500 font-mono text-xs uppercase tracking-widest">
+            Establishing Secure Connection...
+          </p>
+        </div>
+      </div>
+
+      {/* The Ideal Progress Bar */}
+      <div className="mt-8 w-64 h-1.5 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
+        <div className="h-full bg-gradient-to-r from-transparent via-cyan-500 to-transparent w-full animate-loading-slide"></div>
+      </div>
     </div>
   );
 
-  if (error) return <div className="p-10 text-red-400 bg-red-900/20 border border-red-900 m-8 rounded-xl text-center">Error: {error}</div>;
-
+  if (error) return (
+    <div className="flex flex-col items-center justify-center min-h-[60vh] p-10">
+      <div className="bg-rose-500/10 border border-rose-500/20 p-8 rounded-[2rem] text-center max-w-md">
+        <div className="w-16 h-16 bg-rose-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+          <Activity className="text-rose-500 rotate-45" size={32} />
+        </div>
+        <h2 className="text-white font-black uppercase tracking-tight text-xl mb-2">Sync Interrupted</h2>
+        <p className="text-rose-200/60 text-sm font-mono mb-6">
+          {error === 'Failed to fetch' ? 'API Rate limit exceeded or Network Error. Please wait 60 seconds.' : error}
+        </p>
+        <button 
+          onClick={() => window.location.reload()}
+          className="px-8 py-3 bg-white text-black font-bold rounded-xl hover:bg-rose-500 hover:text-white transition-all uppercase text-xs tracking-widest"
+        >
+          Retry Connection
+        </button>
+      </div>
+    </div>
+  );
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       {/* Search Section */}
