@@ -6,9 +6,15 @@ import { Search, Loader2, TrendingUp, TrendingDown } from 'lucide-react';
 
 const Home = () => {
   const { loading, error } = useFetchCrypto();
-  const { coins } = useCrypto();
+  const { coins, currency } = useCrypto(); // Grab currency from context
   const [search, setSearch] = useState('');
   const inputRef = useRef(null);
+
+  // Helper to match symbol to currency code
+  const getSymbol = (code) => {
+    const symbols = { USD: '$', EUR: '€', PHP: '₱', JPY: '¥' };
+    return symbols[code] || '$';
+  };
 
   useEffect(() => {
     if (inputRef.current) inputRef.current.focus();
@@ -30,20 +36,18 @@ const Home = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      {/* Search Section */}
       <div className="relative mb-10 group">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-cyan-400 transition-colors" size={20} />
         <input
           ref={inputRef}
           type="text"
-          placeholder="Search assets (e.g., Bitcoin, ETH)..."
+          placeholder="Search assets..."
           className="w-full p-4 pl-12 rounded-2xl bg-slate-800/50 border border-slate-700 focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 outline-none transition-all text-lg placeholder:text-slate-600 shadow-inner"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
 
-      {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         {filteredCoins.map(coin => {
           const isPositive = coin.price_change_percentage_24h >= 0;
@@ -62,7 +66,8 @@ const Home = () => {
                 
                 <div className="text-right">
                   <p className="text-lg font-bold font-mono text-white">
-                    ${coin.current_price.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                    {/* DYNAMIC SYMBOL APPLIED HERE */}
+                    {getSymbol(currency)}{coin.current_price.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                   </p>
                   <div className={`flex items-center justify-end gap-1 text-sm font-medium ${isPositive ? 'text-emerald-400' : 'text-rose-400'}`}>
                     {isPositive ? <TrendingUp size={14}/> : <TrendingDown size={14}/>}
@@ -75,11 +80,10 @@ const Home = () => {
         })}
       </div>
 
-      {/* Chart Section */}
       <div className="bg-slate-800/30 p-8 rounded-[2rem] border border-slate-700/50 shadow-2xl backdrop-blur-sm">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-2 h-8 bg-cyan-500 rounded-full"></div>
-          <h2 className="text-2xl font-bold">Market Depth Analysis</h2>
+          <h2 className="text-2xl font-bold">Market Depth Analysis ({currency})</h2>
         </div>
         <MarketChart />
       </div>
