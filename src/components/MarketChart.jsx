@@ -15,10 +15,18 @@ const MarketChart = () => {
       <h2 className="text-white mb-4">Price Comparison (USD)</h2>
       <ResponsiveContainer>
         <BarChart data={chartData}>
-          <XAxis dataKey="name" stroke="#94a3b8" />
-          <YAxis stroke="#94a3b8" />
-          <Tooltip contentStyle={{backgroundColor: '#1e293b', border: 'none'}} />
-          <Bar dataKey="price" fill="#22d3ee" radius={[4, 4, 0, 0]} />
+            <XAxis dataKey="name" stroke="#94a3b8" />
+            <YAxis
+            tick={{ fill: '#94a3b8', fontSize: 12 }} 
+            tickFormatter={(value) => `$${value.toLocaleString()}`} // Adds $ and commas
+            width={80}
+            />
+            <Tooltip 
+            contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff' }}
+            itemStyle={{ color: '#22d3ee' }}
+            formatter={(value) => [`$${value.toLocaleString()}`, "Price"]}
+            />
+        <Bar dataKey="price" fill="#22d3ee" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>

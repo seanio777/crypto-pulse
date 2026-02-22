@@ -1,33 +1,37 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { CryptoProvider } from './context/CryptoContext';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import Analysis from './pages/Analysis';
+import { CryptoProvider } from './context/CryptoContext';
 
 function App() {
   return (
     <CryptoProvider>
-      <Router>
-        {/* Tailwind CSS Styling */}
-        <nav className="p-5 bg-indigo-900 text-white flex justify-between items-center shadow-lg">
-          <h1 className="text-xl font-bold tracking-widest text-cyan-400">CRYPTO-PULSE</h1>
-          <div className="flex gap-6 items-center">
-            <Link to="/" className="hover:text-cyan-400 transition">Market</Link>
-            <Link to="/analysis" className="hover:text-cyan-400 transition">Analysis</Link>
-            {/* Simple Currency Toggle for Context Logic */}
-            <button 
-              onClick={() => alert("Currency logic integrated in Context!")}
-              className="bg-gray-700 px-3 py-1 rounded text-xs"
-            >
-              USD
-            </button>
-          </div>
-        </nav>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/analysis" element={<Analysis />} />
-        </Routes>
-      </Router>
+      <BrowserRouter>
+        <div className="min-h-screen bg-[#0f172a] text-slate-200 font-sans">
+          {/* Professional Header Section */}
+          <nav className="sticky top-0 z-50 backdrop-blur-md bg-[#0f172a]/80 border-b border-slate-800 px-8 py-4 flex justify-between items-center">
+            <Link to="/" className="text-2xl font-black tracking-tighter text-cyan-400 hover:text-cyan-300 transition-colors">
+              CRYPTO<span className="text-white">-PULSE</span>
+            </Link>
+            <div className="flex gap-8 items-center font-medium">
+              <Link to="/" className="hover:text-cyan-400 transition-colors">Market</Link>
+              <Link to="/analysis" className="hover:text-cyan-400 transition-colors">Analysis</Link>
+              <button className="bg-slate-100 text-slate-900 px-4 py-1.5 rounded-lg text-sm font-bold shadow-lg hover:bg-white transition-all">
+                USD
+              </button>
+            </div>
+          </nav>
+
+          <main className="max-w-7xl mx-auto">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/analysis" element={<Analysis />} />
+            </Routes>
+          </main>
+        </div>
+      </BrowserRouter>
     </CryptoProvider>
   );
 }
+
 export default App;
