@@ -25,7 +25,7 @@ export const useFetchCrypto = () => {
       // REQUIREMENT: timer
       setTimeout(() => {
         setLoading(false);
-      }, 1500);
+      }, 800);
     }
   }, [currency, setCoins]); // Only changes if currency or setCoins changes
 
