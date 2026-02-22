@@ -23,28 +23,43 @@ const Settings = () => {
         
         <div className="grid gap-4">
         {currencies.map((curr) => (
-          <button
-            key={curr.code}
-            onClick={() => setCurrency(curr.code)}
-            className={`flex items-center justify-between p-6 rounded-2xl border-2 transition-all ${
-              currency === curr.code 
-              ? 'bg-cyan-500/20 border-cyan-500 text-white shadow-[0_0_20px_rgba(6,182,212,0.2)]' 
-              : 'bg-slate-900/80 border-slate-700 text-slate-200 hover:border-slate-500'
-            }`}
-          >
-            <div className="flex items-center gap-5">
-              <span className={`text-3xl font-bold w-10 ${currency === curr.code ? 'text-cyan-400' : 'text-slate-400'}`}>
-                {curr.symbol}
-              </span>
-              <div className="text-left">
-                <p className="text-lg font-black tracking-tight">{curr.code}</p>
-                <p className={`text-sm font-medium ${currency === curr.code ? 'text-cyan-200/70' : 'text-slate-500'}`}>
-                  {curr.name}
-                </p>
-              </div>
-            </div>
-            {currency === curr.code && <CheckCircle2 className="text-cyan-400" size={28} strokeWidth={3} />}
-          </button>
+            <button
+                key={curr.code}
+                onClick={() => setCurrency(curr.code)}
+                className={`flex items-center justify-between p-6 rounded-2xl border-2 transition-all duration-200 ${
+                currency === curr.code 
+                ? 'bg-white border-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.4)] scale-[1.02]' 
+                : 'bg-white/90 border-slate-700 hover:border-slate-500'
+                }`}
+            >
+                <div className="flex items-center gap-5">
+                {/* SYMBOL: Stays Cyan for visibility */}
+                <span className="text-3xl font-black w-10 text-cyan-500">
+                    {curr.symbol}
+                </span>
+                
+                <div className="text-left">
+                    {/* CURRENCY CODE: Always text-slate-900 (Deep Black/Blue) */}
+                    <p className="text-2xl font-black uppercase tracking-tighter text-slate-900">
+                    {curr.code}
+                    </p>
+                    
+                    {/* FULL NAME: Always text-slate-600 (Dark Gray) */}
+                    <p className="text-sm font-bold text-slate-600">
+                    {curr.name}
+                    </p>
+                </div>
+                </div>
+
+                {/* SELECTION INDICATOR */}
+                <div className="flex items-center">
+                {currency === curr.code ? (
+                    <CheckCircle2 className="text-slate-900" size={32} strokeWidth={3} />
+                ) : (
+                    <div className="w-8 h-8 rounded-full border-2 border-slate-300" />
+                )}
+                </div>
+            </button>
         ))}
         </div>
 
