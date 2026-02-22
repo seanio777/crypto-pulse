@@ -33,9 +33,13 @@ function AppContent() {
             {/* FIXED SETTINGS BUTTON */}
             <button 
               onClick={() => setIsSettingsOpen(true)}
-              className="p-2 text-slate-400 hover:text-white bg-slate-800 rounded-lg hover:bg-slate-700 transition-all"
+              className="p-2.5 rounded-xl border border-slate-700 bg-slate-800 transition-all duration-200 
+                          hover:bg-cyan-400 hover:border-cyan-400 group shadow-lg"
             >
-              <Settings size={20} />
+              <Settings 
+                size={20}
+                className="text-slate-400 group-hover:text-black transition-colors duration-200"
+              />
             </button>
           </div>
         </div>
@@ -44,11 +48,17 @@ function AppContent() {
       {/* SETTINGS MODAL */}
       {isSettingsOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="bg-slate-900 border border-slate-800 w-full max-w-md rounded-[2rem] p-8 shadow-2xl">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-black uppercase tracking-tight">Settings</h2>
-              <button onClick={() => setIsSettingsOpen(false)} className="text-slate-500 hover:text-white">
-                <X size={24} />
+          <div className="bg-slate-900 border border-slate-800 w-full max-w-md rounded-[2.5rem] p-8 shadow-2xl overflow-hidden">
+            <div className="flex justify-between items-center mb-8">
+              <h2 className="text-xl font-black uppercase tracking-tight text-white">Settings</h2>
+              <button onClick={() => setIsSettingsOpen(false)} 
+                className="p-2 rounded-xl border border-slate-700 bg-slate-800 transition-all duration-200 
+                     hover:bg-cyan-400 hover:border-cyan-400 group"
+              >
+                <X 
+                  size={24}
+                  className="text-slate-400 group-hover:text-black transition-colors duration-200" 
+                />
               </button>
             </div>
             
