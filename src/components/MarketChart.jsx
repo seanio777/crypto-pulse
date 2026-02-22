@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import { useCrypto } from '../context/CryptoContext';
 
 const MarketChart = () => {
   const { coins, currency } = useCrypto();
+  // State to track if screen is mobile
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  // Update state on resize
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const currencySymbols = { USD: '$', PHP: '₱', EUR: '€', JPY: '¥', GBP: '£' };
   const currentSymbol = currencySymbols[currency] || '$';
@@ -14,28 +23,37 @@ const MarketChart = () => {
     <ResponsiveContainer width="100%" height="100%">
       <BarChart 
         data={coins} 
-        margin={{ top: 20, right: 30, left: 20, bottom: 25 }}
+        /* Reduced horizontal margins for mobile to give the chart more room */
+        margin={{ 
+          top: 20, 
+          right: isMobile ? 10 : 30, 
+          left: isMobile ? 0 : 20, 
+          bottom: 25 
+        }}
         barGap={8}
       >
         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" opacity={0.3} />
         
         <XAxis 
           dataKey="symbol" 
-          // FIX: This makes the labels CAPITALIZED like the cards
           tickFormatter={(value) => value.toUpperCase()}
-          tick={{ fill: '#94a3b8', fontSize: 12, fontWeight: 'bold' }} 
+          tick={{ fill: '#94a3b8', fontSize: isMobile ? 10 : 12, fontWeight: 'bold' }} 
           tickLine={false}
           axisLine={false}
-          dy={15} // Adds some space between the bars and the labels
+          dy={15}
+          /* On very small screens, hide some labels if they overlap */
+          interval={isMobile ? "preserveStartEnd" : 0} 
         /> 
         
         <YAxis 
+          orientation="left"
           stroke="#94a3b8"
-          fontSize={12}
+          fontSize={10}
           tickLine={false}
           axisLine={false}
           tickFormatter={(value) => `${currentSymbol}${value.toLocaleString()}`}
-          width={80}
+          /* Narrower width on mobile so the bars have more space */
+          width={isMobile ? 50 : 80}
         />
 
         <Tooltip 
@@ -44,9 +62,9 @@ const MarketChart = () => {
             backgroundColor: '#1e293b', 
             border: '1px solid #334155', 
             borderRadius: '12px',
-            color: '#fff' 
+            color: '#fff',
+            fontSize: '12px'
           }}
-          // Ensures Tooltip also shows Uppercase symbols
           labelFormatter={(label) => label.toUpperCase()}
           formatter={(value) => [`${currentSymbol}${value.toLocaleString()}`, "Price"]}
         />
@@ -55,7 +73,8 @@ const MarketChart = () => {
           dataKey="current_price" 
           fill="#22d3ee" 
           radius={[6, 6, 0, 0]} 
-          barSize={65} // Thicker bars as requested
+          /* DYNAMIC: Thinner bars on mobile so they don't overlap */
+          barSize={isMobile ? 30 : 65} 
         />
       </BarChart>
     </ResponsiveContainer>
