@@ -77,16 +77,23 @@ const Home = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       {/* Search Section */}
-      <div className="relative mb-10 group">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-cyan-400 transition-colors" size={20} />
-        <input
-          ref={inputRef}
-          type="text"
-          placeholder="Search assets..."
-          className="w-full p-4 pl-12 rounded-2xl bg-slate-800/50 border border-slate-700 focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 outline-none transition-all text-lg text-white placeholder:text-slate-600 shadow-inner"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+      <div className="flex justify-center mb-8 px-2"> 
+        <div className="relative w-full md:max-w-md group">
+          <Search 
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-cyan-400 transition-colors" 
+            size={18} 
+          />
+          <input
+            ref={inputRef}
+            type="text"
+            placeholder="Search assets..."
+            className="w-full py-2 pl-11 pr-4 rounded-xl bg-slate-800/40 border border-slate-700/50 
+                      focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/10 outline-none 
+                      transition-all text-sm text-white placeholder:text-slate-500 shadow-sm"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
       </div>
 
       {/* Cards Grid */}
