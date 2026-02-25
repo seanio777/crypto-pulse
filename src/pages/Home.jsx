@@ -3,11 +3,12 @@ import { useFetchCrypto } from '../hooks/useFetchCrypto';
 import { useCrypto } from '../context/CryptoContext';
 import MarketChart from '../components/MarketChart';
 import { Search, Loader2, TrendingUp, TrendingDown, Activity } from 'lucide-react';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 const Home = () => {
   const { loading, error } = useFetchCrypto();
   const { coins, currency } = useCrypto(); 
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useLocalStorage('cryptoSearch', '');
   const inputRef = useRef(null);
 
   const getSymbol = (code) => {
