@@ -4,21 +4,27 @@ const CryptoContext = createContext();
 
 export const CryptoProvider = ({ children }) => {
   const [coins, setCoins] = useState([]);
+  const [currency, setCurrency] = useState(localStorage.getItem('userCurrency') || 'USD');
 
-  // 1. INITIALIZATION: Instead of 'USD', check the browser's "memory" (localStorage)
-  // If no currency is saved, it defaults to 'USD'
-  const [currency, setCurrency] = useState(
-    localStorage.getItem('userCurrency') || 'USD'
-  );
+  // NEW: chartType state (defaults to 'line' if nothing is saved)
+  const [chartType, setChartType] = useState(localStorage.getItem('userChartType') || 'line');
 
-  // 2. PERSISTENCE LOGIC: Every time the 'currency' state changes,
-  // we save that new value into localStorage automatically.
+  // Sync currency to localStorage
   useEffect(() => {
     localStorage.setItem('userCurrency', currency);
   }, [currency]);
 
+  // NEW: Sync chartType to localStorage
+  useEffect(() => {
+    localStorage.setItem('userChartType', chartType);
+  }, [chartType]);
+
   return (
-    <CryptoContext.Provider value={{ coins, setCoins, currency, setCurrency }}>
+    <CryptoContext.Provider value={{ 
+      coins, setCoins, 
+      currency, setCurrency, 
+      chartType, setChartType // Export these
+    }}>
       {children}
     </CryptoContext.Provider>
   );
